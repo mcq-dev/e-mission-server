@@ -9,6 +9,7 @@ import logging
 import pandas as pd
 import pymongo
 import itertools
+import json
 
 import emission.core.get_database as edb
 import emission.storage.timeseries.abstract_timeseries as esta
@@ -185,8 +186,10 @@ class BuiltinTimeSeries(esta.TimeSeries):
             (self._get_query(key_list, time_query, geo_query,
                              extra_query_list), sort_key))
         (orig_ts_db_keys, analysis_ts_db_keys) = self._split_key_list(key_list)
-        logging.debug("orig_ts_db_keys = %s, analysis_ts_db_keys = %s" % 
+        logging.debug("orig_ts_db_keys = %s, analysis_ts_db_keys = %s" % ^
             (orig_ts_db_keys, analysis_ts_db_keys))
+
+        logging.debug("patrick wants to know about find_entries in builtin_timeseries.py")
 
         orig_ts_db_result = self._get_entries_for_timeseries(self.timeseries_db,
                                                              orig_ts_db_keys,
@@ -194,6 +197,8 @@ class BuiltinTimeSeries(esta.TimeSeries):
                                                              geo_query,
                                                              extra_query_list,
                                                              sort_key)
+
+        logging.debug("orig_ts_db_result as json.dumps: " + json.dumps(orig_ts_db_result))
 
         analysis_ts_db_result = self._get_entries_for_timeseries(self.analysis_timeseries_db,
                                                                  analysis_ts_db_keys,
@@ -230,7 +235,7 @@ class BuiltinTimeSeries(esta.TimeSeries):
         else:
             ts_db_result = tsdb.find(INVALID_QUERY)
 
-        logging.debug("finished querying values for %s, count = %d" % (key_list, ts_db_result.count()))
+        logging.debug("finished querying valuesssss for %s, count = %d" % (key_list, ts_db_result.count()))
         return ts_db_result
 
     def get_entry_at_ts(self, key, ts_key, ts):

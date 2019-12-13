@@ -22,12 +22,14 @@ def get_count(mode_section_grouped_df):
     ret_dict = {}
     for (mode, mode_section_df) in mode_section_grouped_df:
         ret_dict[mode] = len(mode_section_df)
+    logging.debug("patrick wuz in simple_metrics.py")
     return ret_dict
 
 def get_distance(mode_section_grouped_df):
     ret_dict = {}
     for (mode, mode_section_df) in mode_section_grouped_df:
         ret_dict[mode] = float(mode_section_df.distance.sum())
+    logging.debug("patrick wuz in simple_metrics.py")
     return ret_dict
 
 def get_duration(mode_section_grouped_df):

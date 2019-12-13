@@ -53,6 +53,7 @@ def group_by_timestamp(user_id, start_ts, end_ts, freq, summary_fn_list):
             "result": [[] for i in range(len(summary_fn_list))]
         }
     logging.debug("first row is %s" % section_df.iloc[0])
+    logging.debug("second row is %s" % section_df.iloc[1])
     secs_to_nanos = lambda x: x * 10 ** 9
     section_df['start_dt'] = pd.to_datetime(secs_to_nanos(section_df.start_ts))
     time_grouped_df = section_df.groupby(pd.Grouper(freq=freq, key='start_dt'))
