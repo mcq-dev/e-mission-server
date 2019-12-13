@@ -186,8 +186,7 @@ class BuiltinTimeSeries(esta.TimeSeries):
             (self._get_query(key_list, time_query, geo_query,
                              extra_query_list), sort_key))
         (orig_ts_db_keys, analysis_ts_db_keys) = self._split_key_list(key_list)
-        logging.debug("orig_ts_db_keys = %s, analysis_ts_db_keys = %s" % ^
-            (orig_ts_db_keys, analysis_ts_db_keys))
+        logging.debug("orig_ts_db_keys = %s, analysis_ts_db_keys = %s" % (orig_ts_db_keys, analysis_ts_db_keys))
 
         logging.debug("patrick wants to know about find_entries in builtin_timeseries.py")
 
