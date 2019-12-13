@@ -11,7 +11,7 @@ import emission.net.usercache.abstract_usercache_handler as euah
 import emission.net.usercache.abstract_usercache as enua
 import emission.storage.timeseries.abstract_timeseries as esta
 import emission.storage.decorations.tour_model_queries as esdtmq
-from emission.core.get_database import get_db, get_mode_db, get_section_db
+from emission.core.get_database import get_mode_db, get_section_db
 
 import emission.analysis.intake.cleaning.filter_accuracy as eaicf
 import emission.analysis.intake.segmentation.trip_segmentation as eaist
@@ -31,82 +31,82 @@ Questions:
 Are we training the model on all trips or just the ones from this user?
 Are we retraining the whole model every time?
 How to know if the section has never been predicted?
-	is it quicker to check for a match in the prediction db or
-	to automatically store all sections in the prediction db with a 0 for prediction type
-	and then just see how many we have in there and then match them up with the section?
+        is it quicker to check for a match in the prediction db or
+        to automatically store all sections in the prediction db with a 0 for prediction type
+        and then just see how many we have in there and then match them up with the section?
 
 
 '''
 def setup(self):
-
+       return
 
 def run_model_pipeline(process_number, uuid_list):
-	"""
-	Run the modeling stage of the pipeline. 
+        """
+        Run the modeling stage of the pipeline. 
 
 
-	"""
+        """
 
 
 
 
 
-	for uuid in uuid_list:
-		if uuid is None:
-			continue
+        for uuid in uuid_list:
+                if uuid is None:
+                        continue
 
-		try: 
-			run_model_pipeline_for_user(uuid)
-		except Exception as e:
-			print "dang flabbit failed on error %s" % e
+                try: 
+                        run_model_pipeline_for_user(uuid)
+                except Exception as e:
+                        print("dang flabbit failed on error %s" % e)
 
 
 def run_mode_inference_pipeline_for_user(uuid):
 
-	MIP = ModeInferencePipeline() #I don't think its this simple
-	
+        MIP = ModeInferencePipeline() #I don't think its this simple
+        
 
-	allConfirmedTripsQuery = ModeInferencePipeline.getSectionQueryWithGroundTruth({'$ne': ''})
-	#These are all the trips that have a confirmed mode. We will be training off of this.
+        allConfirmedTripsQuery = ModeInferencePipeline.getSectionQueryWithGroundTruth({'$ne': ''})
+        #These are all the trips that have a confirmed mode. We will be training off of this.
 
-	#(MIP.modeList, MIP.confirmedSections) = MIP.loadTrainingDataStep(allConfirmedTripsQuery)
+        #(MIP.modeList, MIP.confirmedSections) = MIP.loadTrainingDataStep(allConfirmedTripsQuery)
 
 
 
-	MIP.runPipeline()
+        MIP.runPipeline()
 
 
 def update_model_for_user(uuid, algorithm_id=1):
 
-	MIP = pipeline.ModelInferencePipeline()
-	MIP.runModelBuildingStage(uuid = uuid, algorithm_id= algorithm_id)
-	#user.model = MIP.getModel
+        MIP = pipeline.ModelInferencePipeline()
+        MIP.runModelBuildingStage(uuid = uuid, algorithm_id= algorithm_id)
+        #user.model = MIP.getModel
 
 def predict_for_user(uuid, timerange, model=None):
 
-	if model is None:
-		pass
-		#model = user.model
-	MIP = pipeline.ModelInferencePipeline()
-	MIP.runModeInferenceStage(uuid, timerange, model=model)
+        if model is None:
+                pass
+                #model = user.model
+        MIP = pipeline.ModelInferencePipeline()
+        MIP.runModeInferenceStage(uuid, timerange, model=model)
 
 
 def run_mode_pipeline(process_number, uuid_list):
 
-	MIP = pipeline.ModelInferencePipeline()
-	for user_id in uuid_list:
-		try:
-			run_mode_pipeline_for_user(MIP, user_id)
-		except e:
-			logging.debug("Skipping user %s because of error" % user_id)
-			logging.debug("error %s" % e)
-			mark_mode_failed_for_user(user_id)
+        MIP = pipeline.ModelInferencePipeline()
+        for user_id in uuid_list:
+                try:
+                        run_mode_pipeline_for_user(MIP, user_id)
+                except e:
+                        logging.debug("Skipping user %s because of error" % user_id)
+                        logging.debug("error %s" % e)
+                        mark_mode_failed_for_user(user_id)
 
 def run_mode_pipeline_for_user(MIP, uuid):
 
-	timerange = get_time_range_for_mode_inference(uuid)
-	MIP.runPipelineModelStage(uuid, timerange)
-	mark_mode_inference_done_for_user(uuid, MIP.getLastTimestamp})
+        timerange = get_time_range_for_mode_inference(uuid)
+        MIP.runPipelineModelStage(uuid, timerange)
+        mark_mode_inference_done_for_user(uuid, MIP.getLastTimestamp)
 
 
 if __name__ == '__main__':

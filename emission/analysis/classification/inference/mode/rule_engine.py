@@ -227,7 +227,6 @@ def collapse_modes(section_entry, modes):
     if eaid.is_bicycling_speed(pd.Series(section_entry.data["speeds"]).median()):
         return 'BUS'
     else:
-        return 'TRAIN'	        
         # We only want to return a train modes there, so let's remove bus from the list
         if 'BUS' in train_mapped_modes:
             train_mapped_modes.remove("BUS")
