@@ -197,7 +197,6 @@ class BuiltinTimeSeries(esta.TimeSeries):
                                                              extra_query_list,
                                                              sort_key)
 
-        logging.debug("patrick sees timeseries_db " + json.dumps(self.timeseries_db))
         logging.debug("patrick sees orig_ts_db_keys " + json.dumps(orig_ts_db_keys))
         logging.debug("patrick sees time_query " + json.dumps(time_query))
         logging.debug("patrick sees geo_query " + json.dumps(geo_query))
